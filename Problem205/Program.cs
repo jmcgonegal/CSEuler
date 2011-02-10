@@ -22,8 +22,8 @@ namespace Problem205
             for (int i = 0; i < dice; i++)
             {
                 int roll = r.Next(sides) + 1;
-                if (roll == 0) throw new Exception("fuck");
-                if (roll == 7) throw new Exception("cool");
+                //if (roll == 0) throw new Exception("error 0");
+                //if (roll == 7) throw new Exception("error 7");
                 sum += roll;
             }
             return sum;
