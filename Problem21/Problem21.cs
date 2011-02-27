@@ -12,7 +12,7 @@ namespace Problem21
             List<int> factors = new List<int>();
 
             factors.Add(1);
-            factors.Add(number);
+            //factors.Add(number);
             for (int j = 2; j <= (int)Math.Floor(number / 2.0); j++)
             {
                 if (number % j == 0)
@@ -30,6 +30,7 @@ namespace Problem21
             {
                 sum += num;
             }
+
             return sum;
         }
         static void Main(string[] args)
@@ -37,13 +38,16 @@ namespace Problem21
             Problem21 prog = new Problem21();
             int[] sums = new int[10000];
             int number_total = 0;
-            // i dont care about memory
+
+            // calculate the sums of each number
             for (int i = 2; i < 10000; i++)
             {
                 sums[i] = prog.getSumFactor(i);
             }
             List<int> numbers = new List<int>();
-            for (int i = 2; i < 1000 - 1; i++)
+
+            // find pairs
+            for (int i = 2; i < 10000 - 1; i++)
             {
                 for (int j = i + 1; j < 10000; j++)
                 {
@@ -55,12 +59,14 @@ namespace Problem21
                     }
                 }
             }
+
+            // calculate sum of pairs
             foreach (int i in numbers)
             {
                 number_total += i;
-                Console.WriteLine(i);
+                //Console.WriteLine(i);
             }
-            Console.WriteLine(numbers.Contains(981));
+
             Console.WriteLine("Answer = " + number_total);
             Console.ReadKey();
         }

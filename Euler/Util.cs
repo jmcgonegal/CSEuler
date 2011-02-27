@@ -27,6 +27,10 @@ namespace Euler
 
             return primes;
         }
+        static void Main()
+        {
+
+        }
     }
     
 
