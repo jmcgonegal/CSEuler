@@ -53,13 +53,13 @@ namespace Problem97
         }
         static void Main(string[] args)
         {
-            Problem97 prog = new Problem97(1);
+            Problem97 prog = new Problem97(28433);
 
             for (int i = 0; i < 7830457; i++) // 2^7830457
             {
                 prog.multiply(2);
             }
-            prog.multiply(28433);
+
             prog.add(1);
 
             Console.WriteLine("Answer = " + prog.getDigits());
