@@ -8,6 +8,12 @@ namespace Euler
 {
     public class Util
     {
+        public static string ReverseString(string s)
+        {
+            char[] arr = s.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
+        }
         public static List<int> GetPrimes(int val)
         {
             BitArray bits = new BitArray(val, true);

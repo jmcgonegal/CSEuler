@@ -16,67 +16,96 @@ namespace Problem35
         static void Main(string[] args)
         {
             List<int> primes = Euler.Util.GetPrimes(999999);
-            List<int> not_circlular = new List<int>(primes);
+            //List<int> circlular = new List<int>(primes);
             List<int> count = new List<int>();
             foreach (int prime in primes)
             {
-
-                if (("" + primes).Length == 1)
+                
+                if (!count.Contains(prime))
                 {
-                    count.Add(prime);
-                }
-                else
-                {
-                    char[] number = prime.ToString().ToCharArray();
-                    bool circlular = true;
-
-
-                    for (int i = 0; i < (number.Length * (number.Length - 1)) - 1; i++)
-                    {
-                        swap(number, i % (number.Length - 1), number.Length - 1);
-                        
-                        int value = int.Parse(new string(number));
-
-                        if (!primes.Contains(value))
-                        {
-                            circlular = false;
-                        }
-                        else
-                        {
-                            //Console.WriteLine(prime + " = " + value);
-                        }
-
-                    }
-
-                    
-                    if (circlular)
+                    if (prime < 10)
                     {
                         count.Add(prime);
-                        Console.WriteLine(prime + " is circlular ");
                     }
                     else
                     {
-                        //Console.WriteLine(prime + " is not circlular ");
+                        // get circular values
+                        List<int> values = getRotations(prime);//getCirclular(prime);
+
+                        bool test = true;
+
+                        // test if they are prime
+                        foreach (int value in values)
+                        {
+                            if (!primes.Contains(value))
+                            {
+                                test = false;
+                                break;
+                            }
+                        }
+                        // if all the numbers are prime, add those to the circlular primes
+                        if (test)
+                        {
+                            foreach (int value in values)
+                            {
+                                if (!count.Contains(value))
+                                {
+                                    count.Add(value);
+                                }
+                            }
+                        }
                     }
                 }
             }
-            Console.WriteLine("Primes = " + primes.Count + " Not Circular = " + not_circlular.Count + " Circular = " + count.Count);
-            Console.WriteLine("Answer = " + (primes.Count - not_circlular.Count));
-            /*
-            char[] test = "123".ToCharArray();
+            Console.WriteLine("Answer = " + count.Count);
 
-            for (int i = 0; i < test.Length*(test.Length-1); i++)
-            {
-                swap(test, i % (test.Length-1), test.Length - 1);
-                    Console.WriteLine(test);
-            }*/
             Console.ReadKey();
+        }
+        static void rotate(char[] array)
+        {
+            char temp = array[0];
+            for(int i = 0; i < array.Length - 1; i++)
+            {
+                array[i] = array[i+1];
+            }
+            array[array.Length-1] = temp;
+        }
+        static List<int> getRotations(int num)
+        {
+            char[] number = num.ToString().ToCharArray();
+            List<int> circlular = new List<int>();
+            for (int n = 0; n < number.Length; n++)
+            {
+                rotate(number);
+
+                int value = int.Parse(new string(number));
+                if (!circlular.Contains(value) /*&& number[0] != '0' */) circlular.Add(value);
+            }
+            circlular.Sort();
+            return circlular;
         }
         static void swap(char[] array, int i, int j)
         {
             char temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            array[i] = array[(i + j) % array.Length];
+            array[(i + j) % array.Length] = temp;
+        }
+        static List<int> getCirclular(int num)
+        {
+            char[] number = num.ToString().ToCharArray();
+            List<int> circlular = new List<int>();
+            for(int n = 0; n < number.Length; n++)
+            {
+                for (int i = 0; i < number.Length; i++)
+                {
+                    swap(number, n, i);
+
+                    int value = int.Parse(new string(number));
+                    if(!circlular.Contains(value) && number[0] != '0') circlular.Add(value);
+                }
+            }
+            circlular.Sort();
+            return circlular;
         }
     }
 }
