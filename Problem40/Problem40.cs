@@ -15,6 +15,8 @@ namespace Problem40
             while (digits <= 1000000)
             {
                 string number = "" + count;
+                
+                // 123 becomes 1, 2, 3
                 foreach (char c in number)
                 {
                     digits++;
