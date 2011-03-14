@@ -7,16 +7,26 @@ namespace Problem63
 {
     class Problem63
     {
+        public static decimal pow(int bse, int exp)
+        {
+            decimal value = 1;
+            for (int i = 0; i < exp; i++)
+            {
+                value *= bse;
+            }
+            return value;
+        }
         static void Main(string[] args)
         {
             int count = 0;
-            // we overflow at 9^20
-            for (int n = 1; n <= 19; n++) 
+            // 9^22 = 21 digits, max(n) = 21
+            for (int n = 1; n <= 21; n++) 
             {
                 // a cannot be greater than 9, 10^2 = 100 or 3 digits
-                for (long a = 1; a < 10; a++)
+                for (int a = 1; a <= 9; a++)
                 {
-                    long b = (long)Math.Pow(a, n);
+                    decimal b = Problem63.pow(a, n);
+
                     if (("" + b).ToCharArray().Length == n)
                     {
                         count++;
@@ -25,12 +35,6 @@ namespace Problem63
                 }
             }
             
-            // by hand
-            // 9^20 and 9^21 = valid, 9^22 = 21 digits
-            Console.WriteLine("9^20 = 12157665459056928801");
-            Console.WriteLine("9^21 = 109418989131512359209");
-            count += 2;
-
             Console.WriteLine("Answer = " + count);
             Console.ReadKey();
         }
