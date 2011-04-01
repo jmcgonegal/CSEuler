@@ -7,63 +7,76 @@ namespace Problem26
 {
     class Problem26
     {
-        static int find(int demoninator)
+        static int MAX_LENGTH = 2000;
+        static int findCyclicNumberDigits(List<int> digits)
         {
-            int MAX = 5000;
-            int[] bignum = new int[MAX];
-            bignum[0] = 10;
-
-            for (int i = 0; i < MAX - 1; i++)
+            if (digits.Count < MAX_LENGTH) return 0;
+            string value = "";
+            for (int i = 0; i < digits.Count; i++)
             {
-                //if (bignum[i] == 0) break;
-                int remainder = 0;
-                Math.DivRem(bignum[i], demoninator, out remainder);
-                int test = (bignum[i] - remainder) / demoninator;
-                bignum[i] = test;
-                int number = bignum[i];
-                bignum[i + 1] = remainder * 10;
-
+                value += digits[i];
             }
-            bignum[MAX - 1] /= 10;
-            int count = 0;
-            for (int i = 1; i < MAX / 2; i++)
+
+            for (int i = 0; i < digits.Count /2; i++)
             {
-                if (bignum[0] == bignum[i])
+                string repeat = "";
+                for (int period = 0; period < digits.Count - i; period++)
                 {
-                    int match = 1;
-                    for (int j = 1; j < i; j++)
+                    
+                    repeat += digits[i + period];
+                    string temp = value.Substring(0,i);
+                    while (temp.Length < value.Length)
                     {
-                        if (bignum[j] == bignum[i + j])
-                        {
-                            match++;
-                        }
-                        else break;
+                        temp += repeat;
                     }
-                    if (match > 1 && count == 0) count = match;
-                }
-            }
+                    temp = temp.Substring(0, value.Length);
 
-            return count;
+                    if (temp == value && repeat.Length < MAX_LENGTH/2)
+                    {
+                        if (repeat.Length > 900)
+                        {
+                            string test = value.Substring(0, i);
+                        }
+                        return repeat.Length;
+                    }
+                }
+
+            }
+            return 0;
         }
         static void Main(string[] args)
         {
+            int max_repeat = 0;
             int answer = 0;
-            int max = 0;
-            for (int number = 1; number <= 1000; number++)
+            // even divisors are never repeating
+            for (int divisor = 3; divisor < 1000; divisor+=2)
             {
-                int match = find(number);
-                if (match > max && match != 499)
-                {
-                    max = match;
-                    answer = number;
-                    //Console.WriteLine(number + " = " + match);
-                }
-                else 
+                List<int> digits = new List<int>();
+                int dividend = 10;
+                int remainder = 0;
+                while (digits.Count < MAX_LENGTH && dividend != 0)
                 {
 
+                    Math.DivRem(dividend, divisor, out remainder);
+                    int digit = (dividend - remainder) / divisor;
+                    digits.Add(digit);
+                    dividend = 10 * remainder;
                 }
+                
+                // we have a repeating number
+                if (digits.Count == MAX_LENGTH)
+                {
+                    int number = findCyclicNumberDigits(digits);
+
+                    if (number > max_repeat)
+                    {
+                        max_repeat = number;
+                        answer = divisor;
+                        Console.WriteLine("1/" + divisor + " = " + number + " repeating digits");
+                    }
+                }
+                
             }
-
             Console.WriteLine("Answer = " + answer);
             Console.ReadKey();
         }
