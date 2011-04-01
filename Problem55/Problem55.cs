@@ -8,15 +8,9 @@ namespace Problem55
 {
     class Problem55
     {
-        public static string Reverse(string s)
-        {
-            char[] charArray = s.ToCharArray();
-            Array.Reverse(charArray);
-            return new string(charArray);
-        }
         static bool isPalindromic(BigInteger num)
         {
-            string rev = Reverse(""+num);
+            string rev = Euler.Util.ReverseString("" + num);
             BigInteger reverse = BigInteger.Parse("" + rev);
             if (num == reverse)
             {
@@ -29,7 +23,7 @@ namespace Problem55
             for (int i = 0; i <= 50; i++)
             {
                 // run the addition first, can be palindromic and lychrel
-                num += BigInteger.Parse(Reverse("" + num));
+                num += BigInteger.Parse(Euler.Util.ReverseString("" + num));
                 if(isPalindromic(num))
                 {
                     return false;
