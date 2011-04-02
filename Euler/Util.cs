@@ -14,6 +14,31 @@ namespace Euler
             Array.Reverse(arr);
             return new string(arr);
         }
+
+        public static List<int> getPermutations(List<int> digits)
+        {
+            List<int> numbers = new List<int>();
+            foreach (int digit in digits)
+            {
+                List<int> temp = new List<int>(digits);
+                if (temp.Count == 1)
+                {
+                    numbers.Add(digit);
+                }
+                else if (temp.Count > 1)
+                {
+                    temp.Remove(digit);
+                    List<int> result = getPermutations(temp);
+                    foreach (int r in result)
+                    {
+                        int value = r * 10 + digit;
+                        if(!numbers.Contains(value)) numbers.Add(value);
+                    }
+                }
+            }
+            return numbers;
+        }
+
         public static List<int> GetPrimes(int val)
         {
             BitArray bits = new BitArray(val, true);
