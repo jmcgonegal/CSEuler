@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections;
 
 namespace Problem50
 {
@@ -11,47 +10,38 @@ namespace Problem50
     {
         static void Main(string[] args)
         {
-            List<int> primes = Euler.Util.GetPrimes(1000000);
-            int[] counts = new int[primes.Count];
+            const int MAX = 1000000;
+            List<int> primes = Euler.Util.GetPrimes(MAX);
+            BitArray numbers = new BitArray(1000000);
             int max_count = 0;
             int max_sum = 0;
-            // lets cheat a little by checking the largest 1000 primes
-            for (int k = primes.Count - 1; k >= primes.Count - 1000; k--)
+
+            // I could speed this up because the GetPrimes function basically makes this already
+            foreach (int prime in primes)
             {
-                int check_prime = primes[k];
-                for (int i = 0; i < primes.Count; i++)
+                numbers[prime] = true;
+            }
+
+            // rewrite, not having to do list lookups makes this fast
+            for (int i = 0; i < primes.Count; i++)
+            {
+                int sum = 0;
+                for (int j = i; j < primes.Count; j++)
                 {
-                    int sum = 0;
-                    int counter = 0;
-                    if (primes.Count - i > max_count)
+                    sum += primes[j];
+                    if (sum > MAX) break;
+                    if (j - i > max_count)
                     {
-                        for (int j = i; j < primes.Count; j++)
+                        // is prime
+                        if (numbers[sum])
                         {
-                            if (sum < check_prime)
-                            {
-                                counter++;
-                                sum += primes[j];
-                                if (counter > max_count)
-                                {
-                                    if (sum == check_prime)
-                                    {
-                                        max_sum = sum;
-                                        max_count = counter;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                break; // sum is bigger/equal to the checked prime
-                            }
+                            max_sum = sum;
+                            max_count = j - i;
                         }
-                    }
-                    else
-                    {
-                        break; // we cant get a bigger count
                     }
                 }
             }
+
 
             Console.WriteLine("Answer = " + max_sum);
             Console.ReadKey();
