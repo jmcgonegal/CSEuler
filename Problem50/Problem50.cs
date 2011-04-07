@@ -12,7 +12,7 @@ namespace Problem50
         {
             const int MAX = 1000000;
             List<int> primes = Euler.Util.GetPrimes(MAX);
-            BitArray numbers = new BitArray(1000000);
+            BitArray numbers = new BitArray(MAX);
             int max_count = 0;
             int max_sum = 0;
 
