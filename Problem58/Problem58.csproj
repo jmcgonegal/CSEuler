@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6AB5ED29-39F7-4C0A-B9A9-A0887BCCBD8D}</ProjectGuid>
+    <ProjectGuid>{F42858FA-2FAA-4C02-AC35-1FE06BF3AFFA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Problem59</RootNamespace>
-    <AssemblyName>Problem59</AssemblyName>
+    <RootNamespace>Problem58</RootNamespace>
+    <AssemblyName>Problem58</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Problem59.cs" />
+    <Compile Include="Problem58.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cipher1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\Euler\Euler.csproj">
+      <Project>{BED17A7E-28AE-43E6-BC6B-8855F6292449}</Project>
+      <Name>Euler</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

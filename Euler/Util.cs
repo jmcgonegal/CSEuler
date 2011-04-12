@@ -38,8 +38,7 @@ namespace Euler
             }
             return numbers;
         }
-
-        public static List<int> GetPrimes(int val)
+        public static BitArray GetPrimeArray(int val)
         {
             BitArray bits = new BitArray(val, true);
 
@@ -47,8 +46,21 @@ namespace Euler
                 if (bits.Get(n))
                     // eliminate multiples of n
                     for (int nmult = n * 2; nmult < val; nmult += n)
-                        bits.Set(nmult, false);
-
+                    {
+                        try
+                        {
+                            bits.Set(nmult, false);
+                        }
+                        catch
+                        {
+                            break;
+                        }
+                    }
+            return bits;
+        }
+        public static List<int> GetPrimes(int val)
+        {
+            BitArray bits = GetPrimeArray(val);
 
             List<int> primes = new List<int>();
 
